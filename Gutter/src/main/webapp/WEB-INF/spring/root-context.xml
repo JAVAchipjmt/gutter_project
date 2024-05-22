@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	<!-- 2024/03/24 (수) 수정 -->
+	<!-- 오라클 데이터베이스 연결 설정 -->	
+	<!-- id : 식별자 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="gutter"/>
+		<property name="password" value="gutter1234"/>
+	</bean>
+	
+	<!-- HikariDataSource : 데이터베이스 연결 설정 
+	     destroy-method="close" : 데이터베이스 사용 후 자동으로 close 시켜 준다.
+	-->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<!-- 생성자 생성시 id="hikariConfig" 로 설정 정보를 참고하여 데이터베이스 연결 시도 -->
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+
+	<!-- mybatis 관련 설정 추가 -->
+	<!-- 데이터베이스와 연결해서 SQL 명령문을 실행시켜주는 객체 -->
+	<bean id="sqlSessionFactory"
+		  class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- mybatis 관련 설정 -->
+	<mybatis-spring:scan 
+	         base-package="org.gutter.mapper"/>
+	         
+	<!-- 서비스 설정 -->
+	<context:component-scan base-package="org.gutter.service">
+	</context:component-scan>
+</beans>

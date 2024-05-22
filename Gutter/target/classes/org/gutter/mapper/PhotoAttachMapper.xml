@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.gutter.mapper.PhotoAttachMapper">
+  	<!-- 신규 첨부파일 등록 처리 -->
+	<insert id="insert">
+		insert into photo_attach
+		     values (#{uuid},#{uploadPath},#{fileName},#{fileType},#{bno})
+	</insert>
+	
+	<!-- 특정 첨부파일 삭제 처리 -->
+	<delete id="delete">
+		delete from photo_attach
+		      where uuid = #{uuid}
+	</delete>
+	
+	<!-- 특정 게시물에 대한 첨부파일 목록 처리 -->
+	<select id="findByBno" 
+		    resultType="org.gutter.domain.CScenterAttachVO">
+		select *
+		  from photo_attach
+		 where bno = #{bno} 	
+	</select>
+	
+	<!-- p579 게시물 삭제시 첨부파일 함께 삭제	 -->
+	<delete id="deleteAll">
+		delete from photo_attach
+		      where bno = #{bno}
+	</delete>
+	
+	<!-- 전일자 첨부파일 내역을 리턴처리 -->
+	<select id="getOldFiles" 
+	        resultType="org.gutter.domain.CScenterAttachVO">
+		select * 
+		  from photo_attach
+		 where uploadpath = to_char(sysdate - 1,'yyyy\mm\dd') 
+	</select>
+	
+</mapper>

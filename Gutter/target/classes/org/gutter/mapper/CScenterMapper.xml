@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gutter.mapper.CScenterMapper">
+	<!-- 게시물 목록 조회 -->
+	<select id="getList" 
+	        resultType="org.gutter.domain.CScenterVO">
+	    <!-- <,> 비교연산자를 태그로 인식하므로 반드시 선언 -->    
+		<![CDATA[
+			select * 
+			  from tbl_cscenter
+			 where bno > 0
+			 order by bno desc
+		]]>
+	</select>
+	
+	<!-- 특정 게시물 번호에 대한 상세 내역 처리 --> 
+	<select id="read" 
+	        resultType="org.gutter.domain.CScenterVO">
+		select * from tbl_cscenter where bno = #{bno}
+	</select>
+	
+	<!-- 특정 게시물 내역 삭제 처리 -->
+	<delete id="delete">
+		delete from tbl_cscenter where bno = #{bno}
+	</delete>
+	
+	<!-- 특정 게시물 댓글 내역 삭제 처리 -->
+	<delete id="deleteReply">
+		delete from cscenter_reply where bno = #{bno}
+	</delete>
+	
+	<!-- 특정 게시물 수정 처리  -->
+	<update id="update">
+		update tbl_cscenter
+		   set title = #{title},
+		       content = #{content},
+		       writer = #{writer},
+		       updateDate = sysdate
+		 where bno = #{bno}
+	</update>
+	
+	<!-- 게시물 작성 -->
+	<insert id="insert">
+	<!-- insert문이 실행되기전 지금 등록되는 게시물번호를 검색 -->
+		<selectKey keyProperty="bno" 
+		           order="BEFORE" resultType="long">
+			select board_seq.nextval from dual
+		</selectKey>
+	
+		insert into tbl_cscenter(bno,title,content,writer,regdate)
+		     values (#{bno},#{title},#{content},#{writer},sysdate)
+	</insert>
+	
+	<sql id="creteria">
+		<!-- prefixOverrides="OR" => 실행될 쿼리문이
+		  맨앞에 OR로 시작하면 삭제 -->
+		  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		  	<foreach collection="typeArr" item="type">
+		  		<trim prefix="OR">
+		  			<choose>
+		  				<when test="type == 'T'.toString()">
+		  					title like '%' || #{keyword}||'%'
+		  				</when>
+		  				<when test="type == 'C'.toString()">
+		  					content like '%' || #{keyword}||'%'
+		  				</when>
+		  				<when test="type == 'W'.toString()">
+		  					writer like '%' || #{keyword}||'%'
+		  				</when>
+		  			</choose>
+		  		</trim>
+		  	</foreach>
+		  </trim>    
+	</sql>
+	
+	<!-- 페이징 처리 -->	
+	<select id="getListWithPaging" resultType="org.gutter.domain.CScenterVO">
+		<![CDATA[
+			select bno,title,content,writer,replycnt, regdate
+			  from  (
+			   select /*+ INDEX_DESC(tbl_cscenter tbl_cscenter_pk) */
+			          rownum rn,bno,title,content,writer,replycnt, regdate
+			     from tbl_cscenter
+		        where
+		  ]]>
+		  
+		  <!-- 위에 선언된 sql 태크의 내용이 추가 -->
+		  <include refid="creteria"/>
+
+		  <![CDATA[			        
+		         rownum <= #{pageNum} * #{amount}
+			         )
+			 where rn > (#{pageNum} - 1) * #{amount}               		
+		  ]]>
+	</select>
+	
+	<!-- 전체 행수 구하기 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*)
+		  from tbl_cscenter
+		 where
+		 <include refid="creteria"/>
+		 bno > 0
+	</select>
+
+	<!-- 댓글 수 처리
+	특정 게시물에 대한 댓글 등록이 되면 건수 +1
+	삭제가 되면 -1 -->
+	<update id="updateReplyCnt">
+		update tbl_cscenter
+		   set replyCnt = replyCnt + #{amount}
+		 where bno = #{bno}   
+	</update>
+	
+	<!-- 내가 쓴 게시물 확인 -->
+	<select id="getMyList" resultType="org.gutter.domain.CScenterVO">
+	    <!-- <,> 비교연산자를 태그로 인식하므로 반드시 선언 -->    
+		<![CDATA[
+			select * 
+			  from tbl_cscenter
+			 where id={#id}
+			 order by to_number(bno) desc
+		]]>
+	</select>
+</mapper>
