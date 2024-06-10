@@ -32,7 +32,6 @@
 	.uploadResult ul li {
 		list-style: none;
 		padding: 10px;
-		/* p543 */
 		align-content: center;
 		text-align: center
 	}
@@ -41,7 +40,6 @@
 		width: 100px;
 	}
 	
-	/* p543 */
 	.uploadResult ul li span {
 		color: white;
 	}
@@ -148,13 +146,10 @@
 						        class="btn btn-danger">
 							목록
 						</button>
-						<!-- p264 -->
 						<form id="operForm" action="/sqeuak/photoModify" method="get">
 							<input type="hidden" id="bno" name="bno" value='<c:out value="${photo.bno}"/>'>
-							<!-- p317 현재 페이지 번호와 행수는 항상 전달-->
 							<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
 							<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
-							<!-- p345 검색조건과 검색 문자열 추가 -->
 							<input type="hidden" name="keyword" value='<c:out value="${cri.keyword}"/>'>
 							<input type="hidden" name="type" value='<c:out value="${cri.type}"/>'>
 						</form>
@@ -201,7 +196,7 @@
 					</ul>
 				</div>
 				
-				<!-- p439 댓글 페이징 화면 구현 -->
+				<!-- 댓글 페이징 화면 구현 -->
 				<div class="panel-footer">
 				</div>
 				
@@ -315,7 +310,7 @@ $(document).ready(function(){
 		                .animate({width:'100%',height: '100%'},1000);
 	}//
 	
-	//p544 원본이미지 클릭시 숨기기
+	// 원본이미지 클릭시 숨기기
 	$(".bigPictureWrapper").on("click",function(e){
 		
 		//원본 이미지를 클릭하면 1초동안 숨기기 선언
@@ -340,7 +335,6 @@ $(document).ready(function(){
 		        .submit();
 	});
 	
-	//p415
 	//특정 게시물 번호를 변수에 대입
 	var bnoValue = '<c:out value="${photo.bno}"/>';
 	
@@ -382,7 +376,7 @@ $(document).ready(function(){
 		}); 
 	}//
 	
-	//p422 댓글 등록 모달창 버튼 처리
+	// 댓글 등록 모달창 버튼 처리
 	//모달창 div 영역의 값을 변수에 대입
 	var modal = $(".modal");
 	
@@ -402,7 +396,6 @@ $(document).ready(function(){
 	//닫기버튼의 모든 정보를 변수에 대입		
 	var modalCloseBtn = $("#modalCloseBtn");
 	
-	/* p727 */
 	var replyer = null;
 	
 	/* 로그인한 사용자의 아이디를 변수에 대입 */
@@ -420,7 +413,6 @@ $(document).ready(function(){
 		//입력창을 클리어
 		modal.find("input").val("");
 		
-		/* p728 */
 		//모달창에 있는 작성자 input태그에 출력
 		modal.find("input[name='replyer']").val(replyer);
 		
@@ -436,13 +428,12 @@ $(document).ready(function(){
 		
 	});
 	
-	/* p728 */
 	/* ajax가 선언된 곳에 beforeSend가 적용되는 효과 */
 	$(document).ajaxSend(function(e,xhr,options){
 		xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
 	});
 	
-	//p423 모달창 등록버튼 처리
+	// 모달창 등록버튼 처리
 	modalRegisterBtn.on("click",function(e){
 		
 		//객체형태
@@ -469,7 +460,7 @@ $(document).ready(function(){
 		
 	});//
 	
-	//p425 댓글 목록에서 특정 댓글 클릭시 상세보기 모달창 구현
+	// 댓글 목록에서 특정 댓글 클릭시 상세보기 모달창 구현
 	$(".chat").on("click","li",function(e){
 					
 		//현재 클릭한 댓글번호를 변수에 대입
@@ -503,10 +494,9 @@ $(document).ready(function(){
 		
 	});
 	
-	//p427 모달창 수정버튼 클릭 처리
+	// 모달창 수정버튼 클릭 처리
 	modalModBtn.on("click",function(e){
 		
-		/* p733 */
 		//모달창 작성자를 변수에 대입
 		var originalReplyer = modalInputReplyer.val();
 		
@@ -543,13 +533,12 @@ $(document).ready(function(){
 		
 	});
 	
-	//p427 모달창 삭제버튼 클릭 처리
+	// 모달창 삭제버튼 클릭 처리
 	modalRemoveBtn.on("click",function(e){
 		
 		//삭제하려는 댓글번호를 변수에 대입
 		var rno = modal.data("rno");
 		
-		//p730
 		if(!replyer){
 			
 			alert("로그인 후 삭제 가능합니다.");
@@ -584,7 +573,7 @@ $(document).ready(function(){
 		$(".modal").modal("hide");
 	});
 	
-	//p440 댓글 페이징 처리
+	// 댓글 페이징 처리
 	
 	var pageNum = 1;
 	
@@ -639,7 +628,6 @@ $(document).ready(function(){
 			
 	}
 	
-	//p441
 	replyPageFooter.on("click","li a",function(e){
 		
 		e.preventDefault();

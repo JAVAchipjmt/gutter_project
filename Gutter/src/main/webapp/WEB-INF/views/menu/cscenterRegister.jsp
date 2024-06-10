@@ -32,7 +32,6 @@
 	.uploadResult ul li {
 		list-style: none;
 		padding: 10px;
-		/* p543 */
 		align-content: center;
 		text-align: center
 	}
@@ -41,7 +40,6 @@
 		width: 100px;
 	}
 	
-	/* p543 */
 	.uploadResult ul li span {
 		color: white;
 	}
@@ -149,7 +147,7 @@ $(document).ready(function(){
 		
 		e.preventDefault();
 		
-		//p564 첨부파일을 테이블에 저장하도록 데이터값을 전송
+		// 첨부파일을 테이블에 저장하도록 데이터값을 전송
 		var str = "";
 		
 		//업로드한 파일 내역을 반복문을 사용하여 문자열을 생성
@@ -226,7 +224,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	//p547 X 삭제표시 클릭시 처리
+	// X 삭제표시 클릭시 처리
 	$(".uploadResult").on("click","button",function(e){
 		
 		//span 태그(X:삭제)를 클릭했을때 data-file 속성값을
@@ -265,7 +263,7 @@ $(document).ready(function(){
 	
 	function showUploadResult(uploadResultArr) {
 	
-		//p558 매개변수 값이 없으면 처리
+		// 매개변수 값이 없으면 처리
 		if (!uploadResultArr || uploadResultArr.length == 0) {
 			return;
 		}
@@ -291,7 +289,6 @@ $(document).ready(function(){
 								str += "<img src='/resources/img/attach.png'>";
 								str += "</div></li>";
 							} else { //업로드한 파일이 이미지인 경우
-								//p528
 								//encodeURIComponent ?
 								//컴퓨터가 인식할 수 있도록 문자열을 바이트배열로 변환
 								//업로드한 파일이 이미지인 경우 썸네일 파일을 보여준다.
@@ -301,7 +298,6 @@ $(document).ready(function(){
 										obj.uuid + "_" +
 										obj.fileName);
 	
-								//p541
 								//업로드 파일이 있는 절대경로
 								var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
 	

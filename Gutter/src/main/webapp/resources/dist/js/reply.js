@@ -58,7 +58,7 @@ var replyService = (function() {
   	      });
   }
   
-  //p408 특정 댓글 삭제처리
+  // 특정 댓글 삭제처리
   function remove(rno,replyer,callback,error){
   
   		$.ajax({
@@ -80,7 +80,7 @@ var replyService = (function() {
   		});
   }
   
-  //p410 특정 댓글 수정
+  // 특정 댓글 수정
   //reply : 댓글데이터를 가지는 변수
   function update(reply,callback,error){
   	
@@ -103,7 +103,7 @@ var replyService = (function() {
   		});
   }
   
-  //p412 특정 댓글 상세보기 테스트
+  // 특정 댓글 상세보기 테스트
  function get(rno,callback,error){
  	
  	//result : 특정 댓글내역을 가지는 변수

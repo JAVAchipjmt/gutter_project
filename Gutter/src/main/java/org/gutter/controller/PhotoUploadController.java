@@ -59,10 +59,8 @@ public class PhotoUploadController {
 		//업로드 폴더 선언
 		String uploadFolder = "/Users/hykim/Documents/SpringStudy/Gutter/src/main/webapp/resources/images";
 		
-		//517
 		String uploadFolderPath = getFolder();
 		
-		//2024/03/27 리턴
 		File uploadPath = new File(uploadFolder,uploadFolderPath);
 		
 		//업로드 폴더가 존재하지 않으면 처리
@@ -78,7 +76,6 @@ public class PhotoUploadController {
 		//반복문을 사용하여 업로드 파일내역을 출력
 		for(MultipartFile multipartFile : uploadFile) {
 			
-			//p518
 			//ArrayList에 담을 AttachFileDTO 인스턴스 생성
 			AttachFileDTO attachDTO = new AttachFileDTO();
 
@@ -86,10 +83,8 @@ public class PhotoUploadController {
 
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("/")+1);
 			
-			//p518 (1)
 			attachDTO.setFileName(uploadFileName);			
 			
-			//p511 UUID를 적용해서 파일 생성
 			//32자리의 UUID를 랜덤하게 생성
 			UUID uuid = UUID.randomUUID();
 			
@@ -103,15 +98,12 @@ public class PhotoUploadController {
 				//업로드한 원본파일이름으로 upload 폴더에 전송
 				multipartFile.transferTo(saveFile);
 				
-				//518 2-3
 				attachDTO.setUuid(uuid.toString());
 				attachDTO.setUploadPath(uploadFolderPath);
 				
-				//p514
 				//만약 업로드한 파일이 이미지 이면 처리
 				if(checkImageType(saveFile)) {
 					
-					//p518 4
 					attachDTO.setImage(true);
 					
 					//썸네일 파일 생성
@@ -213,7 +205,7 @@ public class PhotoUploadController {
 		//다운로드 하려는 파일이름을 변수에 대입
 		String resourceName = resource.getFilename();
 		
-		//p539 UUID 명을 제외하고 실제 파일명만 가져온다.
+		// UUID 명을 제외하고 실제 파일명만 가져온다.
 		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -244,7 +236,7 @@ public class PhotoUploadController {
 		
 	}
 	
-	//p548 첨부파일 삭제처리
+	//첨부파일 삭제처리
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/photoRegister/deleteFile")
 	@ResponseBody

@@ -32,7 +32,6 @@
 	.uploadResult ul li {
 		list-style: none;
 		padding: 10px;
-		/* p543 */
 		align-content: center;
 		text-align: center
 	}
@@ -41,7 +40,6 @@
 		width: 100px;
 	}
 	
-	/* p543 */
 	.uploadResult ul li span {
 		color: white;
 	}
@@ -224,7 +222,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	//p547 X 삭제표시 클릭시 처리
+	// X 삭제표시 클릭시 처리
 	$(".uploadResult").on("click","button",function(e){
 		
 		//span 태그(X:삭제)를 클릭했을때 data-file 속성값을
@@ -263,7 +261,7 @@ $(document).ready(function(){
 	
 	function showUploadResult(uploadResultArr) {
 	
-		//p558 매개변수 값이 없으면 처리
+		// 매개변수 값이 없으면 처리
 		if (!uploadResultArr || uploadResultArr.length == 0) {
 			return;
 		}
@@ -272,10 +270,9 @@ $(document).ready(function(){
 	
 		//반복문을 사용해서 업로드한 파일명을 출력 
 		$(uploadResultArr).each(function(i, obj) {
-							//p525
 							//업로드한 파일이 일반파일인 경우 아이콘을 출력
 							if (!obj.image) {
-								//p537 업로드 파일 경로
+								// 업로드 파일 경로
 								var fileCallPath = encodeURIComponent(
 										obj.uploadPath + "/" +
 										obj.uuid + "_" +
@@ -289,7 +286,6 @@ $(document).ready(function(){
 								str += "<img src='/resources/img/attach.png'>";
 								str += "</div></li>";
 							} else { //업로드한 파일이 이미지인 경우
-								//p528
 								//encodeURIComponent ?
 								//컴퓨터가 인식할 수 있도록 문자열을 바이트배열로 변환
 								//업로드한 파일이 이미지인 경우 썸네일 파일을 보여준다.
@@ -299,7 +295,6 @@ $(document).ready(function(){
 										obj.uuid + "_" +
 										obj.fileName);
 	
-								//p541
 								//업로드 파일이 있는 절대경로
 								var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
 	

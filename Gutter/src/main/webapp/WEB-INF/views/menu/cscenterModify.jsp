@@ -197,7 +197,6 @@ $(document).ready(function(){
 		var bno = '<c:out value="${cscenter.bno}"/>';
 		
 		//데이터는 json 형태로 리턴 
-		//p574
 		//특정 게시물에 대한 첨부파일 목록을 가져온다.
 		
 			$.getJSON("/menu/cscenterGet/getAttachList",{bno: bno},function(arr){
@@ -224,7 +223,6 @@ $(document).ready(function(){
 										str += "<img src='/resources/img/attach.png'>";
 										str += "</div></li>";
 									} else { //업로드한 파일이 이미지인 경우
-										//p528
 										//encodeURIComponent ?
 										//컴퓨터가 인식할 수 있도록 문자열을 바이트배열로 변환
 										//업로드한 파일이 이미지인 경우 썸네일 파일을 보여준다.
@@ -234,7 +232,6 @@ $(document).ready(function(){
 												+ "_"
 												+ obj.fileName);
 	
-										//p541
 										//업로드 파일이 있는 절대경로
 										var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
 	
@@ -322,7 +319,7 @@ $(document).ready(function(){
 
 	function showUploadResult(uploadResultArr) {
 
-		//p558 매개변수 값이 없으면 처리
+		// 매개변수 값이 없으면 처리
 		if (!uploadResultArr || uploadResultArr.length == 0) {
 			return;
 		}
@@ -331,7 +328,6 @@ $(document).ready(function(){
 
 		//반복문을 사용해서 업로드한 파일명을 출력 
 		$(uploadResultArr).each(function(i, obj) {
-							//p525
 							//업로드한 파일이 일반파일인 경우 아이콘을 출력
 							if (!obj.image) {
 								//p537 업로드 파일 경로
@@ -348,7 +344,6 @@ $(document).ready(function(){
 								str += "<img src='/resources/img/attach.png'>";
 								str += "</div></li>";
 							} else { //업로드한 파일이 이미지인 경우
-								//p528
 								//encodeURIComponent ?
 								//컴퓨터가 인식할 수 있도록 문자열을 바이트배열로 변환
 								//업로드한 파일이 이미지인 경우 썸네일 파일을 보여준다.
@@ -358,7 +353,6 @@ $(document).ready(function(){
 										obj.uuid + "_" +
 										obj.fileName);
 
-								//p541
 								//업로드 파일이 있는 절대경로
 								var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
 
@@ -400,7 +394,7 @@ $(document).ready(function(){
 			formObj.submit();
 		}else if(operation === "modify"){
 							
-			//p564 첨부파일을 테이블에 저장하도록 데이터값을 전송
+			//첨부파일을 테이블에 저장하도록 데이터값을 전송
 			var str = "";
 			
 			//업로드한 파일 내역을 반복문을 사용하여 문자열을 생성
@@ -422,11 +416,9 @@ $(document).ready(function(){
 			formObj.attr("action","/menu/cscenterList")
 			       .attr("method","get");
 			
-			//p321
 			var pageNumTag = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amount']").clone();
 			
-			//p347
 			var keywordTag = $("input[name='keyword']").clone();
 			var typeTag = $("input[name='type']").clone();
 			
@@ -435,7 +427,6 @@ $(document).ready(function(){
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
 			
-			//p346
 			formObj.append(keywordTag);
 			formObj.append(typeTag);
 			
@@ -447,7 +438,7 @@ $(document).ready(function(){
 		
 	});
 	
-	//p588 수정 화면에서 삭제 버튼 클릭 시 처리
+	//수정 화면에서 삭제 버튼 클릭 시 처리
 	$(".uploadResult").on("click","button",function(e){
 
 		if(confirm("삭제하시겠습니까?")){

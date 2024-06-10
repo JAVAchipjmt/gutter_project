@@ -14,8 +14,7 @@ public class CScenterVO {
 	private String writer; // 게시물 작성자
 	private Date regdate; // 게시물 등록 일자
 	private Date updateDate; // 게시물 수정 일자
-	
-	//p481
+
 	private int replyCnt; //댓글수
 	
 	//특정 게시물에 대한 첨부파일 목록을 가지는 리스트 선언
